@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
    <?php include('../include/head.php') ?>

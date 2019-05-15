@@ -2,8 +2,8 @@
 -- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jan 11, 2019 at 12:49 AM
+-- Host: localhost:8889
+-- Generation Time: May 15, 2019 at 05:01 AM
 -- Server version: 5.6.38
 -- PHP Version: 7.2.1
 
@@ -62,6 +62,60 @@ INSERT INTO `aodinfor` (`aod_no`, `po_number`, `customer_name`, `customer_ordern
 (6, 6, 'Hasitha', '4657834EDC', 'YY', 'admin@gmail.com', '0000-00-00'),
 (7, 4, 'Hasitha', '1', 'YY', 'admin@gmail.com', '0000-00-00'),
 (8, 3, '', '', '', 'Admin@gmail.com', '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aodManual`
+--
+
+CREATE TABLE `aodManual` (
+  `id` int(11) NOT NULL,
+  `no` varchar(1200) NOT NULL,
+  `date` varchar(1200) NOT NULL,
+  `customerName` varchar(1200) NOT NULL,
+  `salesDisc` varchar(1200) NOT NULL,
+  `description` varchar(1200) NOT NULL,
+  `quantity` varchar(1200) NOT NULL,
+  `createDate` varchar(1200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `aodManual`
+--
+
+INSERT INTO `aodManual` (`id`, `no`, `date`, `customerName`, `salesDisc`, `description`, `quantity`, `createDate`) VALUES
+(1, '3', '2019-03-08', 'TestE', 'Triple Beam Balance MB2610', 'Triple Beam Balance MB2610', '1', '2019-03-08 (11:00:13)');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aodView`
+--
+
+CREATE TABLE `aodView` (
+  `id` int(11) NOT NULL,
+  `poNo` varchar(1000) NOT NULL,
+  `itemCode` varchar(1000) NOT NULL,
+  `sales` varchar(1000) NOT NULL,
+  `alreadyDispathedAmount` varchar(1000) NOT NULL,
+  `orderQyt` varchar(1000) NOT NULL,
+  `availableQty` varchar(1000) NOT NULL,
+  `issueQty` varchar(1000) NOT NULL,
+  `serialNumber` varchar(1000) NOT NULL,
+  `status` varchar(1000) NOT NULL,
+  `returnQtyType` varchar(1000) NOT NULL,
+  `returnQty` varchar(1000) NOT NULL,
+  `dispatchedDate` varchar(1000) NOT NULL,
+  `selectView` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `aodView`
+--
+
+INSERT INTO `aodView` (`id`, `poNo`, `itemCode`, `sales`, `alreadyDispathedAmount`, `orderQyt`, `availableQty`, `issueQty`, `serialNumber`, `status`, `returnQtyType`, `returnQty`, `dispatchedDate`, `selectView`) VALUES
+(10, '3', 'C/DP/4', '50 G Weights.', '2', '2', '32', 'null', 'null', 'null', 'null', 'null', 'null', '1');
 
 -- --------------------------------------------------------
 
@@ -146,7 +200,7 @@ CREATE TABLE `customerinfor` (
 
 INSERT INTO `customerinfor` (`cid`, `name`, `phone`, `email`, `reg_date`) VALUES
 (1, 'TestE', 717898699, 'test@gmail.com', '2018-01-26'),
-(2, 'TestTT', 717898699, 'test@gmail.com', '2018-03-01');
+(3, 'zczx', 0, '2@gmail.com', '2019-03-25');
 
 -- --------------------------------------------------------
 
@@ -248,32 +302,19 @@ INSERT INTO `departmentinfor` (`id`, `departmentname`, `companyid`) VALUES
 --
 
 CREATE TABLE `dispachinfor` (
-  `did` int(11) NOT NULL,
-  `dpid` varchar(500) NOT NULL,
-  `ditem_code` varchar(200) NOT NULL,
-  `dsales` varchar(500) NOT NULL,
-  `alreadyd` varchar(100) NOT NULL,
-  `doq` varchar(100) NOT NULL,
-  `daq` varchar(100) NOT NULL,
-  `diq` varchar(100) NOT NULL,
-  `dsn` varchar(100) NOT NULL,
-  `status` varchar(200) NOT NULL,
-  `dsrq` varchar(200) NOT NULL,
-  `drq` varchar(100) NOT NULL,
-  `ddate` date NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `id` int(11) NOT NULL,
+  `poNo` varchar(1000) NOT NULL,
+  `details` varchar(1000) NOT NULL,
+  `createDate` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `dispachinfor`
 --
 
-INSERT INTO `dispachinfor` (`did`, `dpid`, `ditem_code`, `dsales`, `alreadyd`, `doq`, `daq`, `diq`, `dsn`, `status`, `dsrq`, `drq`, `ddate`) VALUES
-(1, '5', '22', 'wefw', '1', '2', '12', '1', 'CBFSMDF1234', 'Approved', '', '', '2018-05-05'),
-(2, '7', 'E23', 'LTest1', '3', '4', '70', '3', 'T55', 'Approved', '', '', '2018-05-05'),
-(3, '0', '22', 'wefw', '1', '7', '11', '4', '', 'Pedning', '', '', '2018-05-10'),
-(5, 'MII999', '102', 'Sal1', '1', '6', '22', '1', '', 'Approved', '', '', '2018-05-10'),
-(6, '3', '102', 'Sal1', '1', '6', '21', '4', '', 'Pedning', 'Full Return', '', '2018-12-08'),
-(7, '3', '102', 'Sal1', '11', '6', '21', '5', '', 'Approved', 'Full Return', '', '2018-12-08');
+INSERT INTO `dispachinfor` (`id`, `poNo`, `details`, `createDate`) VALUES
+(1, '3', '[{\"poNo\":\"3\",\"itemCode\":\"22\",\"sales\":\"wefw\",\"alreadyDispathedAmount\":\"4\",\"orderQyt\":\"2\",\"availableQty\":\"7\",\"issueQty\":\"1\",\"serialNumber\":\"\",\"status\":\"Approved\",\"returnQtyType\":\"Partial\",\"returnQty\":\"\",\"dispatchedDate\":\"2019-05-14\"}]', '2019-05-14'),
+(4, '3', '[{\"poNo\":\"3\",\"itemCode\":\"22\",\"sales\":\"wefw\",\"alreadyDispathedAmount\":5,\"orderQyt\":\"2\",\"availableQty\":\"7\",\"issueQty\":\"1\",\"serialNumber\":\"\",\"status\":\"Approved\",\"returnQtyType\":\"\",\"returnQty\":\"\",\"dispatchedDate\":\"2019-05-14\"},{\"poNo\":\"3\",\"itemCode\":\"C/DP/4\",\"sales\":\"50 G Weights.\",\"alreadyDispathedAmount\":2,\"orderQyt\":\"2\",\"availableQty\":\"32\",\"issueQty\":\"1\",\"serialNumber\":\"\",\"status\":\"Approved\",\"returnQtyType\":\"\",\"returnQty\":\"\",\"dispatchedDate\":\"2019-05-14\"}]', '2019-05-14');
 
 -- --------------------------------------------------------
 
@@ -634,7 +675,8 @@ INSERT INTO `goodentry` (`purchaseid`, `suppliername`, `supplierinvoiceno`, `ite
 (7, '123', '2342', 'C/CM/5', 'Cube Mould 10kg 4parts', 'Cube Mould 10kg 4parts', '3', '', ''),
 (8, '123', '2342', 'C/CM/4', 'Cube Mould 16kg 2parts ', 'Cube Mould 16kg 2parts', '4', 'admin', '2018-12-08'),
 (9, '123', '434', 'C/DP/4', '50 G Weights.', '50 G Weights.', '32', '2018-12-08', 'admin'),
-(10, '123', '434', 'C/ACV/2', 'Measuring Cup', 'Measuring Cup', '4', 'admin', '2018-12-08');
+(10, '123', '434', 'C/ACV/2', 'Measuring Cup', 'Measuring Cup', '4', 'admin', '2018-12-08'),
+(11, 'Roshan', 'dsd', '     L/CP/10', 'Cutting Player ', 'Cutting Player', '1', 'admin', '2019-03-25');
 
 -- --------------------------------------------------------
 
@@ -657,7 +699,7 @@ CREATE TABLE `iteminfor` (
 --
 
 INSERT INTO `iteminfor` (`id`, `item_code`, `purchasedisc`, `itemcategory`, `reorderlevel`, `subitemreminder`, `salesdisc0`) VALUES
-(3, 'M/C058', 'C058 Compression Testing Machine  2000 Kn', 'Labs', '', '', '[{\"salesdisc\":\"C058 Compression Testing Machine  2000 Kn\"}]'),
+(3, 'M/C058', 'C058 Compression Testing Machine  2000 Kn', 'Survey Spare Part', '', 'T', '[{\"salesdisc\":\"C058 Compression Testing Machine  2000 Kn\"}]'),
 (5, 'M/C055', 'C055  Compression Testing Machine  2000 Kn', 'Labs', '', '', '[{\"salesdisc\":\"C055  Compression Testing Machine E 2000 Kn\"}]'),
 (7, 'M/B033-01', 'B033-01 Automatic Marshall Compactor ', 'Labs', '', '', '[{\"salesdisc\":\"B033-01 Automatic Marshall Compactor For\"}]'),
 (8, 'C/M/MO/2', 'Marshall Mould', 'Labs', '', '', '[{\"salesdisc\":\"Marshall Mould \"}]'),
@@ -1381,15 +1423,10 @@ CREATE TABLE `purchaseorderinfor` (
 --
 
 INSERT INTO `purchaseorderinfor` (`pid`, `customerorderno`, `customername`, `customeraddress`, `customersite`, `itemcode`, `pquantity`, `createby`, `createdate`, `podate`, `poreceiveddate`, `deadlinedate`) VALUES
-(1, '97', 'TestE', 'Test2', 'Site1', '[{\"item_code\":\"102\",\"orderq\":\"5\",\"available_quantity\":\"10\"}]', '', 'admin@gmail.com', '2018-03-01', '2018-03-13', '2018-03-13', '2018-03-20'),
-(2, 'zxZ', 'TestTT', 'AAAA', 'SSS', '', '', 'admin@gmail.com', '2018-03-08', '2018-03-06', '2018-03-14', '2018-03-21'),
-(3, '45646', 'TestE', 'Test1', 'Site2', '[{\"item_code\":\"102\",\"sales_dis\":\"Sal1\",\"orderq\":\"6\",\"available_quantity\":\"10\"}]', '', 'admin@gmail.com', '2018-03-09', '2018-03-14', '2018-03-01', '2018-03-15'),
-(4, 'CUS001', 'TestE', 'Test1', 'Site1', '[{\"item_code\":\"22\",\"orderq\":\"2\",\"available_quantity\":\"12\"}]', '', 'userinv', '2018-05-05', '2018-05-24', '2018-05-23', '2018-05-31'),
-(5, '234234', 'TestE', 'Test1', 'Site2', '[{\"item_code\":\"22\",\"sales_dis\":\"wefw\",\"orderq\":\"2\",\"available_quantity\":\"12\"},{\"item_code\":\"102\",\"sales_dis\":\"Sal1\",\"orderq\":\"5\",\"available_quantity\":\"10\"}]', '', 'userinv', '2018-05-05', '2018-05-16', '2018-05-15', '2018-05-16'),
-(6, '45N', 'TestE', 'Test1', 'Site2', '[{\"item_code\":\"102\",\"sales_dis\":\"Sal1\",\"orderq\":\"3\",\"available_quantity\":\"10\"}]', '', 'admin@gmail.com', '2018-05-05', '2018-05-09', '2018-05-09', '2018-05-10'),
-(7, 'RR', 'TestE', 'Test1', 'Site1', '[{\"item_code\":\"E23\",\"sales_dis\":\"LTest1\",\"orderq\":\"4\",\"available_quantity\":\"70\"}]', '', 'admin@gmail.com', '2018-05-05', '2018-05-16', '2018-05-17', '2018-05-16'),
-(8, '34366', 'TestTT', 'AAAA', 'SSS', '[{\"item_code\":\"102\",\"sales_dis\":\"Sal1\",\"orderq\":\"6\",\"available_quantity\":\"22\"},{\"item_code\":\"22\",\"sales_dis\":\"wefw\",\"orderq\":\"7\",\"available_quantity\":\"11\"}]', '', 'admin@gmail.com', '2018-05-10', '2018-05-23', '2018-05-16', '2018-05-16'),
-(9, '477', 'TestTT', 'AAAA', 'SSS', '[{\"item_code\":\"22\",\"orderq\":\"7\",\"available_quantity\":\"11\"}]', '', 'admin@gmail.com', '2018-05-10', '2018-05-10', '2018-05-16', '2018-05-15');
+(1, 'xcx', 'TestE', 'Test2', 'Site1', '[{\"item_code\":\"C/CDP/1\",\"sales_dis\":\"Cone Dial Penetrometer\",\"orderq\":\"1\",\"available_quantity\":\"1\",\"reminder\":\"GG\nFDDD\"}]', '', 'admin@gmail.com', '2019-03-01', '2019-03-12', '2019-03-26', '2019-03-12'),
+(2, '23432', 'TestE', 'Test2', 'Site2', '[{\"item_code\":\"C/2610B\",\"sales_dis\":\"Triple Beam Balance MB2610\",\"orderq\":\"4\",\"available_quantity\":\"5\",\"reminder\":\"tttt\"},{\"item_code\":\"C/2610B\",\"sales_dis\":\"Triple Beam Balance MB2610\",\"orderq\":\"2\",\"available_quantity\":\"5\",\"reminder\":\"uu\nvv\"}]', '', 'admin@gmail.com', '2019-03-01', '2019-03-20', '2019-03-13', '2019-02-26'),
+(3, '32', 'TestE', 'Test2', 'Site2', '[{\"item_code\":\"     L/CP/10\",\"sales_dis\":\"Cutting Player\",\"orderq\":\"1\",\"available_quantity\":\"1\",\"reminder\":\"YY\"},{\"item_code\":\"C/DP/4\",\"sales_dis\":\"50 G Weights.\",\"orderq\":\"2\",\"available_quantity\":\"32\",\"reminder\":\"FF\"},{\"item_code\":\"22\",\"sales_dis\":\"wefw\",\"orderq\":\"2\",\"available_quantity\":\"7\",\"reminder\":\"FFFF\"}]', '', 'admin@gmail.com', '2019-03-28', '2019-03-14', '2019-03-07', '2019-03-15'),
+(4, '32', 'TestE', 'Test1', 'Site1', '[{\"item_code\":\"C/2610B\",\"sales_dis\":\"Triple Beam Balance MB2610\",\"orderq\":\"2\",\"available_quantity\":\"5\",\"reminder\":\"D\"},{\"item_code\":\"C/DP/4\",\"sales_dis\":\"50 G Weights.\",\"orderq\":\"2\",\"available_quantity\":\"32\",\"reminder\":\"Y\"},{\"item_code\":\"C/ACV/2\",\"sales_dis\":\"Measuring Cup\",\"orderq\":\"3\",\"available_quantity\":\"4\",\"reminder\":\"TT\"}]', '', 'admin@gmail.com', '2019-03-28', '2019-03-20', '2019-02-27', '2019-03-19');
 
 -- --------------------------------------------------------
 
@@ -1410,8 +1447,8 @@ CREATE TABLE `realgoodentry` (
 --
 
 INSERT INTO `realgoodentry` (`id`, `r_itemcode`, `r_purchasedisc`, `r_salesdisc`, `r_quantity`) VALUES
-(1, '102', 'Test12', 'Sal1', '16'),
-(2, '22', '1234', 'wefw', '11'),
+(1, '102', 'Test12', 'Sal1', '17'),
+(2, '22', '1234', 'wefw', '7'),
 (3, 'E23', 'LTest', 'LTest1', '67'),
 (4, '22', '1234', 'awf', '12'),
 (5, 'C/CDP/1', 'Cone Dial Penetrometer ', 'Cone Dial Penetrometer', '1'),
@@ -1419,7 +1456,8 @@ INSERT INTO `realgoodentry` (`id`, `r_itemcode`, `r_purchasedisc`, `r_salesdisc`
 (7, 'C/CM/5', 'Cube Mould 10kg 4parts', 'Cube Mould 10kg 4parts', '3'),
 (8, 'C/CM/4', 'Cube Mould 16kg 2parts ', 'Cube Mould 16kg 2parts', '4'),
 (9, 'C/DP/4', '50 G Weights.', '50 G Weights.', '32'),
-(10, 'C/ACV/2', 'Measuring Cup', 'Measuring Cup', '4');
+(10, 'C/ACV/2', 'Measuring Cup', 'Measuring Cup', '4'),
+(11, '     L/CP/10', 'Cutting Player ', 'Cutting Player', '1');
 
 -- --------------------------------------------------------
 
@@ -1623,10 +1661,7 @@ CREATE TABLE `supplierinfor` (
 --
 
 INSERT INTO `supplierinfor` (`id`, `name`, `address`, `phone`, `email`, `date_value`) VALUES
-(2, 'Roshan', 'No 12, Temple Road, Attidiya', '775748787', 'tripalr1986@gmail.com', '0000-00-00'),
-(3, '123', '21321', '0717898699', 'test@gmail.com', '0000-00-00'),
-(4, 'Roshan Ranasinghe', 'No 20, King Cross Avenue, Colombo 7', '0775767475', 'roshan@gmail.com', '2018-02-07'),
-(8, 'YYUI', 'SS', '0717898699', 'test@gmail.com', '2018-02-23');
+(2, 'Roshan', 'No 12, Temple Road, Attidiya', '775748787', 'tripalr1986@gmail.com', '2019-03-14');
 
 -- --------------------------------------------------------
 
@@ -1658,6 +1693,18 @@ ALTER TABLE `accountinfor`
 --
 ALTER TABLE `aodinfor`
   ADD PRIMARY KEY (`aod_no`);
+
+--
+-- Indexes for table `aodManual`
+--
+ALTER TABLE `aodManual`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `aodView`
+--
+ALTER TABLE `aodView`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `caddsiteinfor`
@@ -1693,7 +1740,7 @@ ALTER TABLE `departmentinfor`
 -- Indexes for table `dispachinfor`
 --
 ALTER TABLE `dispachinfor`
-  ADD PRIMARY KEY (`did`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employeeinfor`
@@ -1803,6 +1850,18 @@ ALTER TABLE `aodinfor`
   MODIFY `aod_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `aodManual`
+--
+ALTER TABLE `aodManual`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `aodView`
+--
+ALTER TABLE `aodView`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `caddsiteinfor`
 --
 ALTER TABLE `caddsiteinfor`
@@ -1812,7 +1871,7 @@ ALTER TABLE `caddsiteinfor`
 -- AUTO_INCREMENT for table `categoryreportinfor`
 --
 ALTER TABLE `categoryreportinfor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `companyinfor`
@@ -1824,7 +1883,7 @@ ALTER TABLE `companyinfor`
 -- AUTO_INCREMENT for table `customerinfor`
 --
 ALTER TABLE `customerinfor`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `departmentinfor`
@@ -1836,7 +1895,7 @@ ALTER TABLE `departmentinfor`
 -- AUTO_INCREMENT for table `dispachinfor`
 --
 ALTER TABLE `dispachinfor`
-  MODIFY `did` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `employeeinfor`
@@ -1854,7 +1913,7 @@ ALTER TABLE `exportdb`
 -- AUTO_INCREMENT for table `goodentry`
 --
 ALTER TABLE `goodentry`
-  MODIFY `purchaseid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `purchaseid` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `iteminfor`
@@ -1866,13 +1925,13 @@ ALTER TABLE `iteminfor`
 -- AUTO_INCREMENT for table `purchaseorderinfor`
 --
 ALTER TABLE `purchaseorderinfor`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `realgoodentry`
 --
 ALTER TABLE `realgoodentry`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `repayroll`
@@ -1920,10 +1979,10 @@ ALTER TABLE `suppliedreportinfor`
 -- AUTO_INCREMENT for table `supplierinfor`
 --
 ALTER TABLE `supplierinfor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `temp`
 --
 ALTER TABLE `temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;

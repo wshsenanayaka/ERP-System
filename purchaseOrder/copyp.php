@@ -290,9 +290,8 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 
-  var array=[];
-
-
+      var array=[];
+      
    // jQuery methods go here...
     function add_button() {
 

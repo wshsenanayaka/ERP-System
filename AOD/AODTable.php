@@ -7,7 +7,7 @@
     {
       $search =$_POST["query"];
       $query = "
-      SELECT * FROM   dispachinfor WHERE dpid LIKE '%".$search."%' OR  ditem_code LIKE '%".$search."%' OR dsales LIKE '%".$search."%' OR  alreadyd LIKE '%".$search."%' OR  doq LIKE '%".$search."%'  OR  dsn LIKE '%".$search."%' OR  status LIKE '%".$search."%' OR dsrq LIKE '%".$search."%'  OR  drq LIKE '%".$search."%' OR  ddate LIKE '%".$search."%' OR  daq LIKE '%".$search."%'";
+      SELECT * FROM   dispachinfor WHERE id LIKE '%".$search."%' AND poNo LIKE '%".$search."%' ";
     }
     else
     {
@@ -26,20 +26,10 @@
        <thead>
         <tr>
          <th>AOD No</th>
-         <th>PO No</th>
-         <th>Item Code</th>
-         <th>Sales</th>
-         <th>Order quantity</th>
-         <th>Issue Quantity</th>
-         <th>Aleady dispatched</th>
-         <th>Serial number</th>
-         <th>Return Qty</th>
-         <th>Status</th>
          <th>Dispatched date</th>
          <th></th>
          <th></th>
          <th></th>
-
         </tr>
        </thead>
        <tbody>
@@ -49,20 +39,11 @@
        {
         echo '
         <tr>
-         <td>'.$row["did"].'</td>
-         <td>'.$row["dpid"].'</td>
-         <td>'.$row["ditem_code"].'</td>
-         <td>'.$row["dsales"].'</td>
-         <td>'.$row["doq"].'</td>
-         <td>'.$row["diq"].'</td>
-         <td>'.$row["alreadyd"].'</td>
-         <td>'.$row["dsn"].'</td>
-         <td>'.$row["drq"].'</td>
-         <td>'.$row["status"].'</td>
-         <td>'.$row["ddate"].'</td>
-         <td><a href="aCreateNewAODEdit?aedit_id='.$row["did"].'">Edit</a></td>
-         <td><a href="#" onclick="confirmation(event,'.$row["did"].')">Delete</a></td>
-         <td><button type="button"  name="'.$row["did"].'" class="btn btn-primary btn-sm view_data"  style="border: 0px; ">Print</button></td>
+         <td>'.$row["id"].'</td>
+         <td>'.$row["createDate"].'</td>
+         <td><a href="aCreateNewAODEdit?aedit_id='.$row["id"].'">Edit</a></td>
+         <td><a href="#" onclick="confirmation(event,'.$row["id"].')">Delete</a></td>
+         <td><button type="button"  name="'.$row["id"].'" class="btn btn-primary btn-sm view_data"  style="border: 0px; ">Print</button></td>
         </tr>
         ';
        }

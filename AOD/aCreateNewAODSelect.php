@@ -1,5 +1,4 @@
 <!-- nexgenITs Admin dashbord All right reseverd.-->
-
 <?php include('../include/check.php') ?>
 
 <!DOCTYPE html>
@@ -56,8 +55,8 @@
         require '../include/config.php';
         if(isset($_GET['sedit_id']))
          {
-          $itemAvailable=array();//available items quantity with item code
-          $sedit_id=$_GET['sedit_id'];
+            $itemAvailable=array();//available items quantity with item code
+            $sedit_id=$_GET['sedit_id'];
             $query ="SELECT itemcode as pitemcode , createdate as pcreatedate ,pid as ppid FROM purchaseorderinfor WHERE pid = '$sedit_id' ";
 
             $result = mysqli_query($conn ,$query);
@@ -85,35 +84,34 @@
                        $result2=mysqli_query($conn ,$query2);
                        $row2 = mysqli_fetch_array($result2);
 
-                          echo '
-                            <tr>
-                            <td>'.$code.'</td>
-                            <td>'.$code1.'</td>
-                            <td>';
-                              if(isset($row2[0]))
-                              {
-                                echo $row2[0];
-                              }
-                              else
-                              {
-                                echo "0";
-                              }
-                          echo '
-                            </td>
-                            <td>'.$row['pcreatedate'].'</td>
-                            <td>'.$code2.'</td>
-                            <td><a href="aCreateNewAODSelect?dispach_id='.$row["ppid"].'&dsale='.$code1.'&itemcode='.$code.'&order='.$code2.'&sedit_id='.$sedit_id.'">Add to Dispatch</a></td>
-                           </tr>';
+                        echo '
+                          <tr>
+                          <td>'.$code.'</td>
+                          <td>'.$code1.'</td>
+                          <td>';
+                            if(isset($row2[0]))
+                            {
+                              echo $row2[0];
+                            }
+                            else
+                            {
+                              echo "0";
+                            }
+                        echo '
+                          </td>
+                          <td>'.$row['pcreatedate'].'</td>
+                          <td>'.$code2.'</td>
+                          <td><input type="button" value="Add to Dispatch" onclick="myForm(\'' .$row["ppid"].  '\',\'' .$code1.  '\',\'' .$code.  '\',\'' .$code2.  '\',\'' .$sedit_id.  '\')" class="btn btn-primary btn-sm"/></td>
+                          </tr>';
                   }
              }
          }
       ?>
     </div>
-
     <div class="">
       <div class="table-responsive">
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-          <table  class="table table-bordered table-striped table-responsive" width="1500px">
+        <form action="" method="POST">
+          <table  class="table table-bordered table-striped table-responsive" width="1500px" id="dispachTable">
            <thead>
             <tr>
              <th>PO No</th>
@@ -129,7 +127,6 @@
              <th>Return Qty</th>
              <th>Dispatched date</th>
              <th></th>
-              <th></th>
             </tr>
            </thead>
            <tbody>
@@ -138,196 +135,59 @@
           </div>
           <input type="hidden" id="result"/>
           <?php
-            require '../include/config.php';
-            if(isset($_GET['dispach_id']))
-             {
-              $itemAvailable=array();//available items quantity with item code
-              $sedit_id=$_GET['dispach_id'];
-              $dsale=$_GET['dsale'];
-              $orgsales=$_GET['dsale'];
-              $code=$_GET['itemcode'];
-              $order=$_GET['order'];
-                $query ="SELECT itemcode as pitemcode , createdate as pcreatedate ,pid as ppid FROM purchaseorderinfor WHERE pid = '$sedit_id' ";
 
-                $result = mysqli_query($conn ,$query);
+            $selectView =1;
+            $queryView ="SELECT * FROM aodView WHERE selectView='$selectView'";
+            $resultView =mysqli_query($conn,$queryView);
 
+            while($rowView = mysqli_fetch_array($resultView))
+            {
+            echo '
+            <tr>
+                <td>'.$rowView["poNo"].'</td>
+                <input type="hidden" name="poNo" value="'.$rowView["poNo"].'"/>
+                <td>'.$rowView["itemCode"].'</td>
+                <input type="hidden" name="itemCode" value='.$rowView["itemCode"].'>
+                <td>'.$rowView["sales"].'</td>
+                <textarea type="hidden" style="display:none;"  name="sales">'.$rowView["sales"].'</textarea>
+                <td>'.$rowView["alreadyDispathedAmount"].'</td>
+                <input type="hidden" name="alreadyDispathedAmount" value='.$rowView["alreadyDispathedAmount"].'>
+                <td>'.$rowView["orderQyt"].'</td>
+                <input type="hidden" name="orderQyt" value='.$rowView["orderQyt"].'>
+                <td>'.$rowView["availableQty"].'</td>
+                <input type="hidden" name="availableQty" value='.$rowView["availableQty"].'>
+                
+                <td><input type="number" name="issueQty" class="form-control form-control-sm" min="0" step="0"/></td>
+                <td><textarea type="text" name="serialNumber" class="form-control form-control-sm"></textarea></td>
+                <td>Approved</td>
 
+                <td><select type="text" class="form-control form-control-sm" name="returnQtyType">
+                <option value="">Select</option>
+                <option value="Full Return">Full Return</option>
+                <option value="Partial Return">Partial Return</option>
+                </select></td>
 
-                 $query_r ="SELECT * FROM  realgoodentry WHERE r_itemcode='$code' AND r_salesdisc='$dsale'";
-                 $result_r =mysqli_query($conn,$query_r);
+                <td><input type="number" name="returnQty"  class="form-control form-control-sm" min="0"/></td>
+                <td><input type="text" name="dispatchedDate"  class="form-control form-control-sm" value='.date("Y-m-d").' readonly/></td>
 
-                 while ($row_r=mysqli_fetch_array($result_r))
-                 {
-                      $quantity =$row_r['r_quantity'];
+                <td><input type="button" value ="Delete" onclick="myForm1('.$rowView["id"].')"  class="btn btn-primary btn-sm" /></td>
+            </tr>
+            ';
+          
+            }
 
-                 }
-
-                  $queryad ="SELECT * FROM dispachinfor WHERE ditem_code='$code' AND  dsales='$dsale' AND dpid='".$_GET['sedit_id']."'";
-                  $resultad =mysqli_query($conn,$queryad);
-                   while ($row=mysqli_fetch_array($resultad))
-                   {
-                        $alreadyd =$row['alreadyd'];
-
-                   }
-
-                 echo '
-                          <tr>
-                           <td>'.$sedit_id.'</td>
-                           <input type="hidden" name="po_number" value="'.$sedit_id.'"/>
-                           <td>'.$code.'</td>
-                           <input type="hidden" name="itemcode" value='.$code.'>
-                           <td>'.$dsale.'</td>
-                           <textarea type="hidden" style="display:none;"  name="dsales">'.$dsale.'</textarea>
-                          ';?>
-                            <td>
-                              <?php
-                              if(isset($alreadyd)){
-                                  if($alreadyd!="")
-                                  {
-                                      echo $alreadyd;
-                                  }
-                                }
-                                  else
-                                  {
-                                    echo "0";
-                                  }
-
-
-                              ?>
-                            </td>
-                 <?php
-                 echo '
-                           <td>'.$order.'</td>
-                           <input type="hidden" name="doq" value='.$order.'>
-                           <td>'.$quantity.'</td>
-                           <input type="hidden" name="daq" value='.$quantity.'>
-                           <td><input type="number" name="issue_qunatity" class="form-control form-control-sm" min="0" step="0"/></td>
-                           <td><textarea type="text" name="sn" class="form-control form-control-sm"></textarea></td>
-                           <td>Pedning</td>
-                           <td><select type="text" class="form-control form-control-sm" name="srq">
-                              <option value="">Select</option>
-                              <option value="Full Return">Full Return</option>
-                              <option value="Partial Return">Partial Return</option>
-                           </select> </td>
-                           <td><input type="number" name="rq"  class="form-control form-control-sm" min="0"/></td>
-                           <td><input type="text" name="ddate"  class="form-control form-control-sm" value='.date("Y-m-d").' readonly/></td>
-                           <td><input type="submit" value ="Dispatch" name="dsave" class="btn btn-primary btn-sm" required="required"/></td>
-                           <td><input type="button" value ="Delete" onclick="goBack()"  name="dsave" class="btn btn-primary btn-sm" /></td>
-
-                          </tr>
-
-                          ';
-               }
-
-          ?>
+         ?>
         </tbody>
-
         </table>
-       </form>
+        <input type="button" value ="Dispatch"  onclick="myDispatch()" class="btn btn-primary btn-sm" />
         <input type="button" value="Go Back" onclick="window.location='./aCreateNewAODCreate';" class="btn btn-primary btn-sm" />
+        </form>
+        <div id="snackbar"><p id="msg_view"></p></div>
       </div>
      </div>
      <br>
 
      </div>
-
-     <?php
-     if(isset($_POST['dsave']))
-       {
-          $issue_qunatity =mysqli_real_escape_string($conn,$_POST['issue_qunatity']);
-          $rq =mysqli_real_escape_string($conn ,$_POST['rq']);
-          if(strpos($issue_qunatity,".") !== false || strpos($rq,".") !== false)
-          {
-             echo "<script type='text/javascript'>alert('Not alive Decimal value as Qunatity');window.history.back();</script>";
-          }
-          else
-          {
-               $state ="Approved";
-               $po_number =mysqli_real_escape_string($conn ,$_POST['po_number']);
-               $itemcode =mysqli_real_escape_string($conn,$_POST['itemcode']);
-               $dsales =mysqli_real_escape_string($conn ,$_POST['dsales']);
-               $doq =mysqli_real_escape_string($conn ,$_POST['doq']);
-               $daq =mysqli_real_escape_string($conn ,$_POST['daq']);
-
-               $issue_qunatity =mysqli_real_escape_string($conn,$_POST['issue_qunatity']);
-               $sn =mysqli_real_escape_string($conn ,$_POST['sn']);
-               $srq =mysqli_real_escape_string($conn,$_POST['srq']);
-               $rq =mysqli_real_escape_string($conn ,$_POST['rq']);
-               $ddate =mysqli_real_escape_string($conn ,$_POST['ddate']);
-
-               $queryad ="SELECT * FROM dispachinfor WHERE ditem_code='$itemcode' AND dsales='$dsales'";
-               $resultad =mysqli_query($conn,$queryad);
-               $count =mysqli_num_rows($resultad);
-               if($count>0)
-               {
-                  while ($row=mysqli_fetch_array($resultad))
-                         {
-                              $alreadyd =$row['alreadyd'];
-
-                         }
-               }
-               else
-               {
-                  $alreadyd=0;
-               }
-
-               if($daq>=$doq)
-               {
-                     if($doq>=$issue_qunatity)
-                      {
-
-                          if($doq>=$alreadyd)
-                          {
-                            if($issue_qunatity!="" && $rq!="")
-                            {
-                               echo "<script type='text/javascript'>alert('Do one operation'); window.history.back();</script>";
-                            }
-                            else
-                            {
-                              $query ="INSERT INTO  dispachinfor ( dpid, ditem_code, dsales,  alreadyd, doq,  daq ,diq,dsn, status,dsrq,drq,ddate)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-
-                              $stmt =mysqli_stmt_init($conn);
-                              if(!mysqli_stmt_prepare($stmt,$query))
-                              {
-                                 echo "SQL Error";
-                              }
-                              else
-                              {
-                                  mysqli_stmt_bind_param($stmt,"ssssssssssss",$po_number,$itemcode,$dsales,$alreadyd,$doq, $daq,$issue_qunatity,$sn,$state,$srq,$rq,$ddate);
-                                  $result =  mysqli_stmt_execute($stmt);
-                                   if(!$result)
-                                    {
-                                       echo "<script type='text/javascript'>alert('Is faild');window.history.back();</script>";
-                                    }
-                                    else
-                                    {
-                                       echo "<script type='text/javascript'>alert('Successfully Dispatch');window.history.back();</script>";
-                                    }
-                               }
-                            }
-                          }
-                          else
-                          {
-
-                            echo "<script type='text/javascript'>alert('Already dispatch quantity greater than Order quantity');window.history.back();</script>";
-                          }
-                      }
-                      else
-                      {
-                        echo "<script type='text/javascript'>alert('Issue quantity greater than Order quantity');window.history.back();</script>";
-
-                      }
-                }
-                else
-                {
-                  echo "<script type='text/javascript'>alert('Order quantity greater than available quantity');window.history.back();</script>";
-                }
-          }
-
-
-     }
-
-     ?>
     </div>
 
     <?php include('../include/footer.php') ?>
@@ -340,7 +200,152 @@
 
 </html>
 <script type="text/javascript">
+
+function myForm1 (id){
+  
+  $.ajax({
+          url:"./controller.php",
+          method:"POST",
+          data:{delete_id:id},
+          success:function(data){
+            location.reload();
+          }
+      });
+}
+
   function goBack() {
     window.history.back();
 }
+
+function myForm(dispach_id ,dsale,itemcode,order,sedit_id) {
+
+  $.ajax({
+        url:"./controller.php",
+        method:"POST",
+        data:{dispach_id:dispach_id,dsale:dsale,itemcode:itemcode,order:order,sedit_id:sedit_id},
+        success:function(data){
+
+          location.reload();
+        }
+  });
+        
+}
+  var array=[];
+      
+  // jQuery methods go here...
+  function myDispatch() {
+
+      var table = $("#dispachTable");
+
+      var count = 0;
+
+      table.find('tr:gt(0)').each(function (i) {
+
+        var $tds = $(this).find('td'),
+        poNo = $tds.eq(0).text();
+        itemCode = $tds.eq(1).text();
+        sales = $tds.eq(2).text();
+        alreadyDispathedAmount = $tds.eq(3).text();
+        orderQyt = $tds.eq(4).text();
+        availableQty = $tds.eq(5).text();
+        issueQty = $tds.eq(6).find("input").val();
+        serialNumber = $tds.eq(7).find("textarea").val();
+        status = $tds.eq(8).text();
+        returnQtyType = $tds.eq(9).find("select").val();
+        returnQty = $tds.eq(10).find("input").val();
+        dispatchedDate = $tds.eq(11).find("input").val();
+
+        var newCount = Number(alreadyDispathedAmount) + Number(issueQty);
+ 
+        if(availableQty<=orderQyt){
+
+          $('#msg_view').html("Order quantity greater than available quantity");
+          myMzg();
+          count++
+        }
+
+    
+        if(orderQyt<=issueQty){
+
+          $('#msg_view').html("Issue quantity greater than Order quantity");
+          myMzg();
+          count++
+        }
+
+        if(orderQyt>=availableQty){
+
+          $('#msg_view').html("Already dispatch quantity greater than Order quantity");
+          myMzg();
+          count++
+        }
+
+        if(issueQty !=="" && returnQty !==""){
+
+          $('#msg_view').html("Do one operation");
+          myMzg();
+          count++
+        }
+
+        
+        if(count==0){
+              
+              var z={"poNo":poNo,"itemCode":itemCode,"sales":sales,"alreadyDispathedAmount":newCount,"orderQyt":orderQyt,
+              "availableQty":availableQty,"issueQty":issueQty,"serialNumber":serialNumber,"status":status,"returnQtyType":returnQtyType
+              ,"returnQty":returnQty,"dispatchedDate":dispatchedDate};
+
+              array.push({poNo:poNo,itemCode:itemCode,sales:sales,alreadyDispathedAmount:newCount,orderQyt:orderQyt,
+                availableQty:availableQty,issueQty:issueQty,serialNumber:serialNumber,status:status,returnQtyType:returnQtyType,
+                returnQty:returnQty,dispatchedDate:dispatchedDate
+              });
+
+              call1(array,poNo);
+        }   
+
+    });
+
+
+    function call1(array,poNo) {
+
+      var arrayNew = JSON.stringify(array);
+
+      $.ajax({
+          url:"./controller.php",
+          method:"POST",
+          data:{newArray:arrayNew,poNo:poNo},
+          success:function(data){
+
+            $('#msg_view').html(data);
+            myMzg1();
+
+          }
+      });   
+    }
+  }
+
+
+    // Message success view
+    function myMzg() {
+      var x = document.getElementById("snackbar");
+      x.className = "show";
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+
+      // Location refech
+      setTimeout(function(){location.reload(); },3000);
+
+    }
+
+
+    // Message  view
+    function myMzg1() {
+      var x = document.getElementById("snackbar");
+      x.className = "show";
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+
+      // Location refech
+      setTimeout(function(){
+        window.location ="./aCreateNewAOD";
+       },3000);
+      
+    }
+
 </script>

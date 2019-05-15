@@ -264,14 +264,14 @@
                    $item_code =$rowse["itemcode"];
                  }
 
-                 $x=$item_code;
 
-                //  $x = json_decode($x);
+
+                 $x = json_decode($item_code, true);
 
                  for($i=0;$i<sizeof($x);$i++)
                   {
 
-                      echo "1";
+                      
                       $code=$x[$i]['item_code'];
                       $code1=$x[$i]['sales_dis'];
                       $code2=$x[$i]['orderq'];
@@ -340,8 +340,7 @@
 <script type="text/javascript">
 
   var array=[];
-
-
+  
    // jQuery methods go here...
    function edit_items()
    {

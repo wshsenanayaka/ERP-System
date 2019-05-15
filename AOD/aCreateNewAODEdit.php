@@ -7,24 +7,14 @@
 
      $id =$_GET['aedit_id'];
     // $_SESSION['editid'] =$_GET['prop_id'];
-     $query ="SELECT * FROM  dispachinfor WHERE did='$id'";
+     $query ="SELECT * FROM  dispachinfor WHERE id='$id'";
      $result =mysqli_query($conn,$query);
      while ($row=mysqli_fetch_array($result))
      {
-        $did =$row['did'];
-        $dpid =$row['dpid'];
-        $ditem_code =$row['ditem_code'];
-        $dsales =$row['dsales'];
-        $alreadyd =$row['alreadyd'];
-        $doq =$row['doq'];
-        $daq =$row['daq'];
-        $diq =$row['diq'];
-        $dsn =$row['dsn'];
-        $status =$row['status'];
-        $dsrq =$row['dsrq'];
-        $drq =$row['drq'];
-        $ddate =$row['ddate'];
-
+        $id =$row['id'];
+        $poNo =$row['poNo'];
+        $details =$row['details'];
+        $createDate =$row['createDate'];
      }
 
    }
@@ -62,172 +52,134 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Edit AOD</a>
+          <a href="#">Edit AOD - <?php echo $id; ?></a>
         </li>
       </ol>
     <div class="container">
-        <form action="aCreateNewAODCont.php" method="POST">
-       <div class="column-left">
-          <div class="form-group" id="show_product_text">
-              <label for="pwd">PO No</label>
-              <div class="col-sm-3">
-               <input type="text" class="form-control form-control-sm" name="dpid" value="<?php if(isset($dpid)){ echo $dpid;}?>"  required="required" readonly/>
-              </div>
-          </div>
-          <div class="form-group" id="show_product_text">
-              <label for="pwd">Item code</label>
-              <div class="col-sm-3">
-               <input type="text" class="form-control form-control-sm" name="ditem_code" value="<?php if(isset($ditem_code)){ echo $ditem_code;}?>"  required="required" readonly/>
-              </div>
-          </div>
-          <div class="form-group" id="show_product_text">
-              <label for="pwd">Sales</label>
-              <div class="col-sm-3">
-              <!--  <input type="text" class="form-control form-control-sm" name="dsales" value="<?php if(isset($dsales)){ echo $dsales;}?>"  required="required"/>  -->
+      <form>
+      <input type="hidden"  value =<?php echo $id; ?> id="editID"/>
+      <div class="row">
+        <div class="col-sm-6">
+            <label for="pwd">PO No - <?php echo $poNo; ?></label>
+        </div>
+        <div class="col-sm-6">
+           <label for="pwd">Dispatched Date -  <?php echo $createDate; ?></label>
+        </div>
+      </div>
+      <div>
+      <br>
+      <table id="uptableitems" class="table table-bordered table-striped table-responsive" >
+        <thead>
+          <tr>
+             <th>PO No</th>
+             <th>Item code</th>
+             <th>Sales</th>
+             <th>Already dispathed amount</th>
+             <th>Order quantity</th>
+             <th>Available Qty</th>
+             <th>Issue Quantity</th>
+             <th>Serial number</th>
+             <th>Status</th>
+             <th>Return Qty</th>
+             <th>Return Type</th>
+             <th>Dispatched date</th>
+             <th></th>
+          </tr>
+        </thead>
+        <tbody>
+           <?php
+                 
+                 $x = json_decode($details, true);
 
-               <select type="text" class="form-control form-control-sm" name="dsales" required="required">
-                 <?php
-                 if(isset($dsales))
-                     {
-                         echo "<option value='".$dsales."'>".$dsales."</option>";
-                     }
-                 ?>
-                   <?php
-                         $querysee ="SELECT salesdisc0 FROM iteminfor WHERE item_code='$ditem_code'";
-                         $resultsee =mysqli_query($conn,$querysee);
-                         $row1 = mysqli_fetch_array($resultsee);
-                         $x="".$row1[0]."";
-                         $x = json_decode($x,true);
+                 for($i=0;$i<sizeof($x);$i++)
+                  {
+                      $poNo=$x[$i]['poNo'];
+                      $itemCode=$x[$i]['itemCode'];
+                      $sales=$x[$i]['sales'];
+                      $alreadyDispathedAmount=$x[$i]['alreadyDispathedAmount'];
+                      $orderQyt=$x[$i]['orderQyt'];
+                      $availableQty=$x[$i]['availableQty'];
+                      $issueQty=$x[$i]['issueQty'];
+                      $serialNumber=$x[$i]['serialNumber'];
+                      $status=$x[$i]['status'];
+                      $returnQtyType=$x[$i]['returnQtyType'];
+                      $returnQty=$x[$i]['returnQty'];
+                      $dispatchedDate=$x[$i]['dispatchedDate'];
 
-                         for($i=0; $i<sizeof($x);$i++)
-                        {
-                          $code=$x[$i]['salesdisc'];
-                          if($dsales!=$code)
-                          {
-                            echo '<option value="'.$code.'">'.$code.'</option>';
-                          }
-                        }
-                    ?>
-               </select>
-              </div>
-          </div>
-          <div class="form-group" id="show_product_text">
-              <label for="pwd">Already dispathed amount</label>
-              <div class="col-sm-3">
-               <input type="text" class="form-control form-control-sm" name="alreadyd" value="<?php if(isset($alreadyd)){ echo $alreadyd;}?>" readonly />
-              </div>
-          </div>
-          <div class="form-group" id="show_product_text">
-              <label for="pwd">Order quantity</label>
-              <div class="col-sm-3">
-               <input type="text" class="form-control form-control-sm" name="doq" value="<?php if(isset($doq)){ echo $doq;}?>" readonly />
-              </div>
-          </div>
-          <div class="form-group" id="show_product_text">
-              <label for="pwd">Available Qty</label>
-              <div class="col-sm-3">
-               <input type="text" class="form-control form-control-sm" name="daq" value="<?php if(isset($daq)){ echo $daq;}?>" readonly/>
-              </div>
-          </div>
-          <div class="form-group">
-              <label for="pwd">Dispatched date</label>
-              <div class="col-sm-3">
-               <input type="date" class="form-control form-control-sm" value="<?php if(isset($ddate)){ echo $ddate;}?>" name="ddate" required="required"/>
-              </div>
-           </div>
-           <div class="aodbtn">
-              <input type="submit" name="aodedit" value="Edit AOD" class="btn btn-primary btn-sm"/>
-              <input type="button" value="Back" onclick="window.location='./aCreateNewAOD';" class="btn btn-primary btn-sm" />
-           </div>
+
+                      echo '
+                        <tr id="rowno'.$i.'">
+                          <td>
+                            '.$poNo.'
+                            <input type="hidden" class="form-control form-control-sm" value ='.$poNo.' name="poNo" readonly/>
+                          </td>
+                          <td>
+                            '.$itemCode.'
+                            <input type="hidden" class="form-control form-control-sm" value ='.$itemCode.' name="itemCode" readonly/>
+                          </td>
+                          <td>
+                            '.$sales.'
+                             <input type="hidden" class="form-control form-control-sm" value ='.$sales.' name="sales" readonly/>
+                          </td>
+
+                          <td>
+                            '.$alreadyDispathedAmount.'
+                            <input type="hidden" class="form-control form-control-sm" value ='.$alreadyDispathedAmount.' name="alreadyDispathedAmount" readonly/>
+                          </td>
+
+                          <td>
+                            '.$orderQyt.'
+                             <input type="hidden" class="form-control form-control-sm" value ='.$orderQyt.' name="orderQyt" readonly/>
+                          </td>
+
+                          <td>
+                            '.$availableQty.'
+                             <input type="hidden" class="form-control form-control-sm" value ='.$availableQty.' name="availableQty" readonly/>
+                          </td>
+
+                          <td>
+                           '.$issueQty.'
+                           <input type="hidden" class="form-control form-control-sm" value ='.$issueQty.' name="issueQty" readonly/>
+                          </td>
+                          <td>
+                            <textarea  type="text" class="form-control form-control-sm" name="serialNumber" required="required">'.$serialNumber.'</textarea>
+                          </td>
+                          <td>
+                          '.$status.'
+                            <input type="hidden" class="form-control form-control-sm" value ='.$status.' name="status" readonly/>
+                          </td>
+                          <td>
+                             <input type="number" class="form-control form-control-sm"  name="returnQty"  value ="'.$returnQty.'"  />
+                          </td>
+
+                          <td>
+                            <select type="text" class="form-control form-control-sm" name="returnQtyType">
+                              <option value='.$returnQtyType.'>'.$returnQtyType.'</option>
+                              <option value="Full Return">Full Return</option>
+                              <option value="Partial Return">Partial Return</option>
+                            </select>
+                          </td>
+                          <td>
+                          '.$dispatchedDate.'
+                           <input type="hidden" class="form-control form-control-sm" value ='.$dispatchedDate.' name="dispatchedDate" readonly/>
+                          </td>
+                          <td>
+                          <input type="button" value="Delete" onclick="remove_items('.$i.')" class="btn btn-primary btn-sm"/>
+                          </td>
+                          </tr>';
+                  }
+
+              ?>
+            </tbody>
+          </table>
+          <div class="abtn">
+             <input type="button" value="Edit AOD" class="btn btn-primary btn-sm" onclick="edit_items()"/>
+             <input type="button" name="serchsubep" onclick="window.location='./aCreateNewAOD';"   value="Cancle" class="btn btn-primary btn-sm"/>
          </div>
-       <div class="column-right">
-          <div class="form-group">
-              <label for="pwd">Issue Quantity</label>
-              <div class="col-sm-3">
-               <input type="text" class="form-control form-control-sm" name="diq" value="<?php if(isset($diq)){ echo $diq;}?>" />
-              </div>
-           </div>
-           <div class="form-group">
-              <label for="pwd">Serial number</label>
-              <div class="col-sm-3">
-               <input type="text" class="form-control form-control-sm" value="<?php if(isset($dsn)){ echo $dsn;}?>" name="dsn" />
-              </div>
-           </div>
-
-
-          <?php if ($email =="userm"): ?>
-          
-           <!-- <div class="form-group">
-              <label for="pwd">Status</label>
-              <div class="col-sm-3">
-                <select type="text" class="form-control form-control-sm" name="status" required="required">
-                   <?php
-                    if(isset($status))
-                        {
-                            echo "<option value='".$status."'>".$status."</option>";
-                        }
-                    ?>
-                    <option value="">Select</option>
-                    <?php
-                    if($status!="Pedning")
-                    {
-                      echo ' <option value="Pedning">Pedning</option>';
-                    }
-                    if($status!="Approved")
-                    {
-                      echo ' <option value="Approved">Approved</option>';
-                    }
-                    if($status!="Rejected")
-                    {
-                      echo ' <option value="Rejected">Rejected</option>';
-                    }
-                 ?>
-                 </select>
-              </div>
-           </div> -->
-
-           <?php else: ?>
-
-           <?php endif ?>
-
-
-
-           <div class="form-group">
-              <label for="pwd">Return Qty</label>
-              <div class="col-sm-3">
-               <select type="text" class="form-control form-control-sm" name="dsrq" >
-                 <?php
-                    if(isset($dsrq))
-                        {
-                            echo "<option value='".$dsrq."'>".$dsrq."</option>";
-                        }
-                    ?>
-                    <option value="">Select</option>
-                    <?php
-                    if($dsrq!="Full Return")
-                    {
-                      echo ' <option value="Full Return">Full Return</option>';
-                    }
-                    if($dsrq!="Partial Return")
-                    {
-                      echo ' <option value="Partial Return">Partial Return</option>';
-                    }
-                 ?>
-                 </select>
-              </div>
-
-           </div>
-           <div class="form-group">
-              <label for="pwd">Return Qty</label>
-              <div class="col-sm-3">
-               <input type="text" class="form-control form-control-sm" value="<?php if(isset($drq)){ echo $drq;}?>" name="drq"/>
-              </div>
-           </div>
-            <div class="col-sm-3">
-                <input type="hidden" class="form-control form-control-sm" value="<?php if(isset($did)){ echo $did;}?>"  name="did"/>
-            </div>
-       </div>
+    
+      </div>
       </form>
+      <div id="snackbar"><p id="msg_view"></p></div>
     </div>
 
     <?php include('../include/footer.php') ?>
@@ -236,5 +188,120 @@
 
 </div>
 </body>
+
+
+<script>
+
+  function remove_items(no)
+  {
+    $('#rowno'+no).remove();
+  }
+
+  var array=[];
+
+
+  var count = 0;
+  
+  // jQuery methods go here...
+  function edit_items()
+  {
+
+     var table = $("#uptableitems");
+
+     table.find('tr:gt(0)').each(function (i) {
+
+     var $tds = $(this).find('td'),
+     poNo = $tds.eq(0).find("input").val();
+     itemCode =$tds.eq(1).find("input").val();
+     sales =$tds.eq(2).find("input").val();
+     alreadyDispathedAmount = $tds.eq(3).find("input").val();
+     orderQyt = $tds.eq(4).find("input").val();
+     availableQty =$tds.eq(5).find("input").val();
+     issueQty = $tds.eq(6).find("input").val();
+     serialNumber = $tds.eq(7).find("textarea").val();
+     status =  $tds.eq(8).find("input").val();
+     returnQty = $tds.eq(9).find("input").val();
+     returnQtyType = $tds.eq(10).find("select").val();
+     dispatchedDate = $tds.eq(11).find("input").val();
+
+
+     if(availableQty<=orderQyt){
+
+      $('#msg_view').html("Order quantity greater than available quantity");
+      myMzg();
+      count++
+    }
+
+
+    if(orderQyt<=issueQty){
+
+      $('#msg_view').html("Issue quantity greater than Order quantity");
+      myMzg();
+      count++
+    }
+
+    if(orderQyt>=availableQty){
+
+      $('#msg_view').html("Already dispatch quantity greater than Order quantity");
+      myMzg();
+      count++
+    }
+
+    if(issueQty !=="" && returnQty !==""){
+
+      $('#msg_view').html("Do one operation");
+      myMzg();
+      count++
+    }
+
+
+    if(count==0){
+        
+        var z={"poNo":poNo,"itemCode":itemCode,"sales":sales,"alreadyDispathedAmount":alreadyDispathedAmount,"orderQyt":orderQyt,
+        "availableQty":availableQty,"issueQty":issueQty,"serialNumber":serialNumber,"status":status,"returnQtyType":returnQtyType
+        ,"returnQty":returnQty,"dispatchedDate":dispatchedDate};
+
+        array.push({poNo:poNo,itemCode:itemCode,sales:sales,alreadyDispathedAmount:alreadyDispathedAmount,orderQyt:orderQyt,
+          availableQty:availableQty,issueQty:issueQty,serialNumber:serialNumber,status:status,returnQtyType:returnQtyType,
+          returnQty:returnQty,dispatchedDate:dispatchedDate
+        });
+
+        call2(array);
+    }
+
+    });
+   
+
+      function call2(array) {
+
+          var arrayNew = JSON.stringify(array);
+          var editID =document.getElementById('editID').value;
+
+          $.ajax({
+              url:"./controller.php",
+              method:"POST",
+              data:{newUpdateArray:arrayNew,editID:editID},
+              success:function(data){
+
+                  $('#msg_view').html(data);
+                  myMzg();
+
+              }
+          });   
+      }
+   }
+
+    // Message success view
+    function myMzg() {
+      var x = document.getElementById("snackbar");
+      x.className = "show";
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+
+      // Location refech
+      setTimeout(function(){location.reload(); },3000);
+
+    }
+
+</script>
 
 </html>

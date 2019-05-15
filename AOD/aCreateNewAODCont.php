@@ -35,7 +35,7 @@
       if (isset($_POST['delete_id']))
          {
               $id = $_POST['delete_id'];
-              $query ="DELETE FROM   dispachinfor WHERE did=?;";
+              $query ="DELETE FROM   dispachinfor WHERE id=?;";
               $stmt =mysqli_stmt_init($conn);
               if(!mysqli_stmt_prepare($stmt,$query))
               {
@@ -132,15 +132,14 @@
          if(isset($_POST['print_id']))
          {
            $val =$_POST['print_id'];
-           $query_obj ="SELECT * FROM dispachinfor WHERE did='".$val."'";
+           $query_obj ="SELECT * FROM dispachinfor WHERE id='".$val."'";
            $result_obj =mysqli_query($conn,$query_obj);
 
            while ($row=mysqli_fetch_array($result_obj))
             {
-               $dpid =$row['dpid'];
-               $ddate =$row['ddate'];
-               $dsales =$row['dsales'];
-               $doq =$row['doq'];
+               $dpid =$row['poNo'];
+               $ddate =$row['createDate'];
+               $details =$row['details'];
             }
 
             $query ="SELECT * FROM purchaseorderinfor WHERE pid='".$dpid."'";
@@ -193,11 +192,23 @@
                                        <th>Quantity</th>
                                      </tr>
                                    </thead>
-                                   <tr>
-                                     <td>001</td>
-                                     <td><?php  echo $dsales; ?></td>
-                                     <td><?php  echo $doq; ?></td>
-                                   </tr>
+                                  
+                                     <?php  
+                                        $json = json_decode($details, true);
+
+                                        $num =1;
+
+                                        for($i=0;$i<sizeof($json);$i++)
+                                        {
+                                            echo ' <tr>';
+                                            echo '<td>'.$num.'</td>';
+                                            echo '<td>'.$json[$i]['sales'].' '.$json[$i]['serialNumber'].'</td>';
+                                            echo '<td>'.$json[$i]['issueQty'].'</td>';
+                                            echo  '</tr>';
+                                            $num++;
+                                        }
+          
+                                   ?>
                                    <tbody>
 
                                    </tbody>
