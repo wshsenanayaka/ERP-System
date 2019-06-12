@@ -232,6 +232,31 @@
 				  echo $output;
 			 }
 
+			// Auto Completed Search php  code 
+			if(isset($_POST["salesDisc"]))
+			{
+				$output = '';
+				$query = "SELECT * FROM  iteminfor ";
+				$result = mysqli_query($conn, $query);
+				$output = '<ul class="list_unstyled" id="salesDiscSE"  style="width: 450px;">';
+		
+					while($row = mysqli_fetch_array($result))
+					{
+						$salesdisc0 =$row['salesdisc0'];
+						$x = json_decode($salesdisc0, true);
+						for($i=0; $i<sizeof($x);$i++)
+						{
+							$code=$x[$i]['salesdisc'];
+							if(stripos($code, $_POST["salesDisc"])){
+								$output .= '<a href="#" style="color: #060606;"><li id="'.$code.'">'.$code.'</li> </a>';
+							} 
+						}		
+					}
+			
+				$output .= '</ul>';
+				echo $output;
+			}
+
  ?>
 
 

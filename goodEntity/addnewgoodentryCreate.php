@@ -5,9 +5,7 @@
 <html lang="en">
 
 <head>
-
    <?php include('../include/head.php') ?>
-
    <style type="text/css">
      .addsb
      {
@@ -29,7 +27,6 @@
 
      }
 
-  
    </style>
 </head>
 
@@ -44,7 +41,6 @@
           <a href="#">Add New Good Entry</a>
         </li>
       </ol>
-
       <div class="form-group">
        <form action="addgoodCont.php" method="POST">
           <?php if (isset($_GET['gname'])): ?>
@@ -81,15 +77,27 @@
                  <input type="text" class="form-control form-control-sm" name="sno" value="<?php if(isset($_GET['gsupno'])){ echo $_GET['gsupno'];}?>"  required="required" <?php if(isset($_GET['gsupno'])){ echo 'readonly';}  ?>/>
               </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" id="viewIC">
              <label for="pwd">Item Code</label>
               <div class="col-sm-3">
-                   <input type="text" class="form-control form-control-sm" name="ic" id="select1" required="required"/>
+                   <input type="text" class="form-control form-control-sm" name="ic" id="select1"/>
                    <div id="userlist6" class="auto-view"></div>
               </div>
           </div>
+          <div class="form-group" id="viewSE">
+             <label for="pwd">Sales disc</label>
+              <div class="col-sm-3">
+                   <input type="text" class="form-control form-control-sm" name="salesdisc" id="select2" style="width: 450px;"/>
+                   <div id="userlist7" class="auto-view"></div>
+              </div>
+          </div>
+
           <div id="show_product_text">
           </div>
+
+          <div id="showSelect">
+          </div>
+
           <div class="form-group">
              <label for="pwd">Quantity</label>
               <div class="col-sm-3">
@@ -133,7 +141,6 @@
        <?php
        if(isset($_GET['gsupno']))
        {
-           $i=1;
            while($row = mysqli_fetch_array($resultse))
            {
             echo '
@@ -145,7 +152,6 @@
              <td><a href="addnewgoodentrydelete?delete_id='.$row["purchaseid"].'">Delete</a></td>
             </tr>
             ';
-            $i++;
            }
         }
        ?>
@@ -170,7 +176,6 @@
   $('#select1').keyup(function(){
 
       var query =$(this).val();
-
         $.ajax({
           url: "addgoodCont",
           method:"POST",
@@ -181,6 +186,22 @@
               $('#userlist6').html(data);
             }
         }); 
+  });
+
+
+  $('#select2').keyup(function(){
+
+    var query =$(this).val();
+      $.ajax({
+        url: "addgoodCont",
+        method:"POST",
+        data:{salesDisc:query},
+        success:function(data)
+          {
+            $('#userlist7').fadeIn();
+            $('#userlist7').html(data);
+          }
+      }); 
   });
 
 
@@ -195,17 +216,33 @@
         data:{item_code:idvalue6},
         success:function(data){
               $('#show_product_text').html(data);
+              $('#viewSE').css("display", "none");
         }
     });
-
-    
-
   });
 
-    $("body").click(function () {
+
+  $(document).on('click', '#userlist7 li', function(){
+
+      var idvalue7 =$(this).attr('id');
+      $('#select2').val(idvalue7);
+      $('#salesDiscSE').css("display", "none");
+      $.ajax({
+          url:"./addgoodContSelect1",
+          method:"POST",
+          data:{salesdiscView:idvalue7},
+          success:function(data){
+
+                $('#showSelect').html(data);
+                $('#viewIC').css("display", "none");
+
+          }
+      });
+  });
+
+  $("body").click(function () {
     $('#userlist6 li').fadeOut();
     $('#itemVal').css("display", "none");
   });
-
 
 </script>

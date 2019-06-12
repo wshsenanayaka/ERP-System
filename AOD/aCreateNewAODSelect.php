@@ -131,7 +131,7 @@
            </thead>
            <tbody>
           <div class="name">
-          <b>Dispach Table<b><br><br>
+          <b>Dispach Table</b><br><br>
           </div>
           <input type="hidden" id="result"/>
           <?php
@@ -343,9 +343,163 @@ function myForm(dispach_id ,dsale,itemcode,order,sedit_id) {
 
       // Location refech
       setTimeout(function(){
-        window.location ="./aCreateNewAOD";
+
+          $('#viewModal').modal('show');    
+
        },3000);
       
     }
 
+    function PrintDiv(divID) {   
+
+      //Get the HTML of div
+      var divElements = document.getElementById(divID).innerHTML;
+      //Get the HTML of whole page
+      var oldPage = document.body.innerHTML;
+
+      //Reset the page's HTML with div's HTML only
+      document.body.innerHTML =
+        "<html><head><title></title></head><body>" +
+        divElements + "</body>";
+
+      //Print Page
+      window.print();
+
+      //Restore orignal HTML
+      document.body.innerHTML = oldPage;
+
+    }
+
+
+
 </script>
+
+
+
+<div id="viewModal" class="modal fade">
+  <div class="modal-dialog" style="max-width: 850px;">
+        <div class="modal-content" style="height : auto;">
+            <div class="modal-header">
+                  <span style="font-size: 23px; font-family: monospace;"><b style="color: white;letter-spacing: 1.3px;">Inbound Request</b></span>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div id="PrintDiv">
+                  <div class="l1" style="text-align: center;">
+                    <h4>BHOOMI- TECH (PVT) LTD.</h4>
+                    <p style="margin-bottom: 0px;">184, Hill Street Dehiwala</p>
+                    <p style="margin-bottom: 0px;">Phone :0112-734550</p>
+                    <p>Fax :0112-734550</p>
+                  </div>
+                  <div class="l2" style="text-align: center;">
+                    <h4 style="border: 1px solid; max-width: 50%; margin: auto;  margin-bottom: 4%;">ADVICE OF DISPATCH</h4>
+                  </div>
+
+                  <?php
+
+                      // database Connection
+                        require '../include/config.php';
+
+                        $query_obj ="SELECT * FROM dispachinfor ORDER BY id DESC LIMIT 1";
+                        $result_obj =mysqli_query($conn,$query_obj);
+             
+                        while ($row=mysqli_fetch_array($result_obj))
+                         {
+                            $dpid =$row['poNo'];
+                            $ddate =$row['createDate'];
+                            $details =$row['details'];
+                         }
+             
+                         $query ="SELECT * FROM purchaseorderinfor WHERE pid='".$dpid."'";
+                         $result =mysqli_query($conn,$query);
+             
+                         while ($ro=mysqli_fetch_array($result))
+                          {
+                             $customername =$ro['customername'];
+                             $customeraddress =$ro['customeraddress'];
+                             $customersite =$ro['customersite'];
+                          }
+
+
+                    
+                  ?>
+                  <div class="" style="height: 100px; margin-left: 10%; margin-right: 10%;">
+                    <div class="l3d1" style="max-width: 50%;  float: left;">
+                      <label for="[object Object]">Messers</label><span style="margin-left: 35px;"><?php echo $customerName;  ?></span><br>
+                      <label for="[object Object]">Address</label><span style="margin-left: 35px;"><?php echo "$customeraddress / $customersite"; ?></span><br>
+                      <label for="[object Object]">Customer's.</label><span style="margin-left: 10px;"><?php echo $pno; ?></span>
+                    </div>
+                    <div class="l3d1" style="max-width: 50%;  float: right;">
+                      <label for="[object Object]">No</label><span style="margin-left: 47px;"><?php echo "$dpid"; ?></span><br>
+                      <label for="[object Object]">Date</label><span style="margin-left: 35px; margin-right: 5px;"><?php echo "$ddate"; ?></span>
+                    </div>
+                  </div>
+                  <div class="" style="margin-left: 10%; margin-right: 10%;">
+                    <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Serial No</th>
+                            <th>Description of Goods / Items</th>
+                            <th>Quantity</th>
+                          </tr>
+                        </thead>
+                      
+                          <?php  
+                            $json = json_decode($details, true);
+
+                            $num =1;
+
+                            for($i=0;$i<sizeof($json);$i++)
+                            {
+                                echo ' <tr>';
+                                echo '<td>'.$num.'</td>';
+                                echo '<td>'.$json[$i]['sales'].' '.$json[$i]['serialNumber'].'</td>';
+                                echo '<td>'.$json[$i]['issueQty'].'</td>';
+                                echo  '</tr>';
+                                $num++;
+                            }
+
+                        ?>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <p>The relevant Invoice will be send to you in due course.</p>
+                  </div>
+                  <div class="" style="height: 100px; margin-left: 10%; margin-right: 10%;">
+                    <div class="sd1" style="float: right;">
+                      <p>..........................................</p>
+                      <p style="margin-bottom: 0px;">Executive Sale / Manager</p>
+                      <p>BHOOMI-TECH</p>
+                    </div>
+                </div>
+                <div class="" style="margin-left: 10%; margin-right: 10%;">
+                  <p>Invoice Reference</p>
+                  <p style="margin-bottom: 0px;">....................................................................................................................................................</p>
+                  <p>Received the above Instrument / Equipments / in goods oders / condition.</p>
+                </div>
+                <br>
+                <div class="" style="margin-left: 10%; margin-right: 10%; height: 100px;">
+                  <div class="l3d1" style="max-width: 40%;  float: left;">
+
+                    <label for="[object Object]">Date</label><span style="margin-left: 10px;">...................................</span>
+                  </div>
+                  <div class="l3d1" style="max-width: 50%;  float: right;">
+                    <p>..........................................</p>
+                    <p style="margin-bottom: 0px;">Signature of Recipient</p>
+                    <p>Company Seal</p>
+                  </div>
+                </div>
+              </div>
+            <div class="">
+              <input type="button" value="Print" onclick="PrintDiv('PrintDiv');"  class="btn btn-primary btn-sm" style="background: #56b8fb; color: white; border-color: #56b8fb; margin-left: 10%; "/>
+              <input type="button" value="Close"  class="btn btn-primary btn-sm" data-dismiss="modal" style="background: #56b8fb; color: white; border-color: #56b8fb;  margin-right: 10%;"/>
+            </div>
+        </div>
+  </div>
+</div>
+
+
+
+
+

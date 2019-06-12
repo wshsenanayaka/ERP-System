@@ -18,14 +18,14 @@
              <label for="pwd">Purchase disc</label>
               <div class="col-sm-3">
                  <!-- <div id="show_product"> -->
-                    <input type="text" id="show_product_text" value="<?php if(isset($purchasedisc)){ echo $purchasedisc;}?>" class="form-control form-control-sm" name="pd" readonly/>
+                    <input type="text" id="show_product_text" value="<?php if(isset($purchasedisc)){ echo $purchasedisc;}?>" class="form-control form-control-sm" name="pd" readonly style="width: 450px;"/>
                  <!-- </div> -->
               </div>
           </div>
           <div class="form-group">
              <label for="pwd">Sales disc</label>
               <div class="col-sm-3">
-                   <select type="text" class="form-control form-control-sm" name="salesdisc" id="show_product_text"  required="required">
+                   <select type="text" class="form-control form-control-sm" name="salesdisc" id="show_product_text" style="width: 450px;">
                     <option value="">Select</option>
                     <?php
                          $querysee ="SELECT salesdisc0 FROM iteminfor WHERE item_code='$value'";
