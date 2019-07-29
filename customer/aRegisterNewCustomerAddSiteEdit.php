@@ -55,12 +55,12 @@
        <th width="5000"><div align="center">Sites</div></th>
 
       <td></td>
-    <!--   <td></td> -->
+      <td></td>
 
       </tr>
 
       <?php
-      require 'config.php';
+      require '../include/config.php';
       $querycc ="SELECT * FROM caddsiteinfor WHERE  cusno='$value'";
       $resultcc =mysqli_query($conn,$querycc);
       $i=1;
@@ -149,8 +149,8 @@
     </thead>
    </table>
   </form>
-    <input class="btn btn-primary btn-sm" type ="submit" value="Save" onclick="window.location='http://localhost:81/bhoomitech/aRegisterNewCustomer';"/>
-    <input type="button" value="Cancel" onclick="window.location='http://localhost:81/bhoomitech/aRegisterNewCustomer';" class="btn btn-primary btn-sm" />
+    <!-- <input class="btn btn-primary btn-sm" type ="submit" value="Save" onclick="window.location='http://localhost:81/bhoomitech/aRegisterNewCustomer';"/> -->
+    <input type="button" value="Cancel" onclick="window.location='./aRegisterNewCustomer';" class="btn btn-primary btn-sm" />
     </div>
 
 

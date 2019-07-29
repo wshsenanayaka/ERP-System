@@ -76,15 +76,15 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="#">Export Items</a>
+        <a href="#">Export - Generate Report</a>
      </li>
     </ol>
      <div class="abtn">
-         <input type="submit" value="Report" onclick="window.location='exportReoprt';" class="btn btn-primary btn-sm" />
-         <input type="submit" value="Add item" onclick="window.location='exportOperation';" class="btn btn-primary btn-sm" />
+         <input type="submit" value="Generate Report" onclick="javascript:printDiv('printablediv');" class="btn btn-primary btn-sm" />
+         <input type="submit" value="Back" onclick="window.location='exportView';" class="btn btn-primary btn-sm" />
      </div>
      <div>
-       <input type="text" name="search_text" id="search_text" placeholder="Search by Any Field " class="form-control  form-control-sm" />
+       <input type="text" name="searchText" id="searchText" class="form-control  form-control-sm" placeholder="Search by Supplier Name " style="width: 30%;"/>
        <br>
        <div id="result">
 
@@ -99,27 +99,6 @@
 </body>
 
 </html>
-<script type="text/javascript">
-  $(document).ready(function() {
-    var max_fields      = 9; //maximum input boxes allowed
-   // var wrapper         = $(".input_fields_wrap"); //Fields wrapper
-   // var add_button      = $(".add_field_button"); //Add button ID
-
-    var x = 1; //initlal text box count
-    $("#add_button").click(function(e){ //on add input button click
-        e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            x++; //text box increment
-            $("#add_list").append('<div><input type="text" name="name[]" class="form-control form-control-sm"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
-        }
-    });
-
-    $("#add_list").on("click",".remove_field", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('div').remove(); x--;
-    })
-});
-</script>
-
 
 
 <script>
@@ -130,7 +109,7 @@ $(document).ready(function(){
     function load_data(query)
     {
         $.ajax({
-        url:"./exportTable.php",
+        url:"./exportReoprtTable",
         method:"POST",
         data:{query:query},
           success:function(data)
@@ -140,8 +119,10 @@ $(document).ready(function(){
         });
     }
 
- $('#search_text').keyup(function(){
+ $('#searchText').keyup(function(){
+
       var search = $(this).val();
+      
       if(search != '')
         {
           load_data(search);

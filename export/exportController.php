@@ -37,7 +37,8 @@
         $date =date('Y-m-d');
         $time =date('H:i:s',time());
 
-        $createdate =$date." (".$time.")";
+        // $createdate =$date." (".$time.")";
+        $createdate =$date;
 
         $query ="INSERT INTO exportdb (date,supplier,proformaNo,paymentCon,situation,createDate)  VALUES (?,?,?,?,?,?)";
 

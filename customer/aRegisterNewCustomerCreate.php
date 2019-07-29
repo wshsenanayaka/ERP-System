@@ -60,7 +60,7 @@
          <?php if ($update == true): ?>
           Edit Customer Details
          <?php else: ?>
-             Add New Customer
+          Add New Customer
           <?php endif ?>
         </li>
       </ol>

@@ -60,6 +60,7 @@
       <?php
 
       require '../include/config.php';
+
       $querycc ="SELECT * FROM caddsiteinfor WHERE  cusno='".$value."'";
       $resultcc =mysqli_query($conn,$querycc);
       $i=1;
@@ -100,31 +101,31 @@
                         Add</button>';
 
 
-        if(isset($_POST['addbtn']))
-        {
-              $val =$_POST['val'];
-              $address =$_POST['txtaddress'];
-              $site =$_POST['txtsite'];
-              echo $val.$address.$site;
+        // if(isset($_POST['addbtn']))
+        // {
+        //       $val =$_POST['val'];
+        //       $address =$_POST['txtaddress'];
+        //       $site =$_POST['txtsite'];
+        //       echo $val.$address.$site;
 
-              $query1 = "INSERT INTO caddsiteinfor (cusno,address,site) VALUES ('$val','$address','$site')";
-              $result1 =mysqli_query($conn,$query1);
-              if(!$result1)
+        //       $query1 = "INSERT INTO caddsiteinfor (cusno,address,site) VALUES ('$val','$address','$site')";
+        //       $result1 =mysqli_query($conn,$query1);
+        //       if(!$result1)
 
-                 {
+        //          {
 
 
-                  echo "<script type='text/javascript'>alert('Insert successfully');window.history.back();</script>";
+        //           echo "<script type='text/javascript'>alert('Insert successfully');window.history.back();</script>";
 
-                 }
-                 else
-                 {
+        //          }
+        //          else
+        //          {
 
-                  echo "<script type='text/javascript'>window.history.back();</script>";
+        //           echo "<script type='text/javascript'>window.history.back();</script>";
 
-                 }
+        //          }
 
-        }
+        // }
         if(isset($_POST['addbtn']))
         {
               $val =$_POST['val'];

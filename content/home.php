@@ -70,7 +70,7 @@
             </div>
             <div class="mr-5"><?php echo $eid; ?> Employees!</div>
           </div>
-          <a class="card-footer text-white clearfix small z-1" href="http://localhost:81/bhoomitech/employee">
+          <a class="card-footer text-white clearfix small z-1" href="../employee/employee">
             <span class="float-left">View Details</span>
             <span class="float-right">
               <i class="fa fa-angle-right"></i>
@@ -91,7 +91,7 @@
             </div>
             <div class="mr-5"><?php echo $iid; ?> New Items!</div>
           </div>
-          <a class="card-footer text-white clearfix small z-1" href="http://localhost:81/bhoomitech/addchecklistitem">
+          <a class="card-footer text-white clearfix small z-1" href="../Item/addchecklistitem">
             <span class="float-left">View Details</span>
             <span class="float-right">
               <i class="fa fa-angle-right"></i>
@@ -107,7 +107,7 @@
             </div>
             <div class="mr-5"><?php echo $pid; ?> Purchase Orders!</div>
           </div>
-          <a class="card-footer text-white clearfix small z-1" href="http://localhost:81/bhoomitech/aCreateNewPurchaseOrder">
+          <a class="card-footer text-white clearfix small z-1" href="../purchaseOrder/aCreateNewPurchaseOrder">
             <span class="float-left">View Details</span>
             <span class="float-right">
               <i class="fa fa-angle-right"></i>
@@ -123,7 +123,7 @@
             </div>
             <div class="mr-5"><?php echo $did; ?> Dispach!</div>
           </div>
-          <a class="card-footer text-white clearfix small z-1" href="http://localhost:81/bhoomitech/aCreateNewAOD">
+          <a class="card-footer text-white clearfix small z-1" href="../AOD/aCreateNewAOD">
             <span class="float-left">View Details</span>
             <span class="float-right">
               <i class="fa fa-angle-right"></i>
