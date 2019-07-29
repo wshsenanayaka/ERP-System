@@ -245,4 +245,10 @@
     $('#itemVal').css("display", "none");
   });
 
+
+  $("body").click(function () {
+    $('#userlist7 li').fadeOut();
+    $('#salesDiscSE').css("display", "none");
+  });
+
 </script>

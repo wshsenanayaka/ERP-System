@@ -35,7 +35,7 @@
       if (isset($_POST['delete_id']))
          {
               $id = $_POST['delete_id'];
-              $query ="DELETE FROM  aodManual WHERE id=?;";
+              $query ="DELETE FROM   aodManual WHERE id=?;";
               $stmt =mysqli_stmt_init($conn);
               if(!mysqli_stmt_prepare($stmt,$query))
               {
@@ -131,30 +131,24 @@
          //AOD Requests php code strat
          if(isset($_POST['print_id']))
          {
-           $val =$_POST['print_id'];
-           $query_obj ="SELECT * FROM dispachinfor WHERE id='".$val."'";
-           $result_obj =mysqli_query($conn,$query_obj);
+            require '../include/config.php';
 
-           while ($row=mysqli_fetch_array($result_obj))
-            {
-               $dpid =$row['poNo'];
-               $ddate =$row['createDate'];
-               $details =$row['details'];
-            }
-
-            $query ="SELECT * FROM purchaseorderinfor WHERE pid='".$dpid."'";
+            $val =$_POST['print_id'];
+            $query ="SELECT * FROM aodManual WHERE id='".$val."'";
             $result =mysqli_query($conn,$query);
-
-            while ($ro=mysqli_fetch_array($result))
-             {
-                $customername =$ro['customername'];
-                $customeraddress =$ro['customeraddress'];
-                $customersite =$ro['customersite'];
-             }
-
+            while ($row=mysqli_fetch_array($result))
+            {
+                $id =$row['id'];
+                $pno =$row['pno'];
+                $customerName	 =$row['customerName'];
+                $other	 =$row['other	'];
+                $details =$row['details'];
+                $createDate	 =$row['createDate'];
+            }
+      
            ?>
 
-           <div id="view_data_Modal" class="modal fade">
+           <div id="viewMModal" class="modal fade">
               <div class="modal-dialog" style="max-width: 850px;">
                    <div class="modal-content" style="height : auto;">
                         <div class="modal-header">
@@ -174,13 +168,13 @@
                              </div>
                              <div class="" style="height: 100px; margin-left: 10%; margin-right: 10%;">
                                <div class="l3d1" style="max-width: 50%;  float: left;">
-                                 <label for="[object Object]">Messers</label><span style="margin-left: 35px;"><?php echo $customername;  ?></span><br>
+                                 <label for="[object Object]">Messers</label><span style="margin-left: 35px;"><?php echo $customerName;  ?></span><br>
                                  <label for="[object Object]">Address</label><span style="margin-left: 35px;"><?php echo "$customeraddress / $customersite"; ?></span><br>
-                                 <label for="[object Object]">Customer's.</label><span style="margin-left: 10px;"><?php echo $dpid;  ?></span>
+                                 <label for="[object Object]">Customer's.</label><span style="margin-left: 10px;"><?php echo $pno;  ?></span>
                                </div>
                                <div class="l3d1" style="max-width: 50%;  float: right;">
-                                 <label for="[object Object]">No</label><span style="margin-left: 47px;"><?php echo "$val"; ?></span><br>
-                                 <label for="[object Object]">Date</label><span style="margin-left: 35px; margin-right: 5px;"><?php echo "$ddate"; ?></span>
+                                 <label for="[object Object]">No</label><span style="margin-left: 47px;"><?php echo "$id"; ?></span><br>
+                                 <label for="[object Object]">Date</label><span style="margin-left: 35px; margin-right: 5px;"><?php echo "$createDate"; ?></span>
                                </div>
                              </div>
                              <div class="" style="margin-left: 10%; margin-right: 10%;">

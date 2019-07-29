@@ -36,6 +36,7 @@
         <div class="abtn">
          <input type="button" value="Add AOD" onclick="window.location='./aCreateNewAODCreate';" class="btn btn-primary btn-sm" />
          <input type="button" value="Manual Add AOD" onclick="window.location='./aCreateNewAODCreateManual';" class="btn btn-primary btn-sm" />
+         <input type="button" value="Manual AOD View" onclick="window.location='./AODTableMView';" class="btn btn-primary btn-sm" />
         </div>
 
        <input type="text" name="search_text" id="search_text" placeholder="Search by Any Field " class="form-control  form-control-sm" />

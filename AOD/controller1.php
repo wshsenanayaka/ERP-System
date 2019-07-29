@@ -106,29 +106,36 @@
 
 
     //  // form submit btn update details php code strat
-    //  if(isset($_POST['editID']))
-    //  {
-    //      $id =mysqli_real_escape_string($conn ,$_POST['editID']);
-    //      $newUpdateArray = $_POST['newUpdateArray'];
+     if(isset($_POST['editID']))
+     {
+         $id =mysqli_real_escape_string($conn ,$_POST['editID']);
+
+         $poNo =mysqli_real_escape_string($conn ,$_POST['poNo']);
+         $customerName =mysqli_real_escape_string($conn ,$_POST['customerName']);   
+         $other =mysqli_real_escape_string($conn ,$_POST['other']);
+
+         $newUpdateArray = $_POST['newUpdateArray'];
         
-    //      $query ="UPDATE dispachinfor  SET details=? WHERE id=?;";
+         $query ="UPDATE aodManual  SET pno=?,customerName=?,other=?,details=? WHERE id=?;";
  
-    //      $stmt =mysqli_stmt_init($conn);
-    //      if(!mysqli_stmt_prepare($stmt,$query))
-    //      {
-    //         echo "SQL Error";
-    //      }
-    //      else
-    //      {
-    //          mysqli_stmt_bind_param($stmt,"ss",$newUpdateArray,$id);
-    //          $result =  mysqli_stmt_execute($stmt);
-    //          if($result){
-    //             echo "Successful update data";
-    //          }
+         $stmt =mysqli_stmt_init($conn);
+         if(!mysqli_stmt_prepare($stmt,$query))
+         {
+            echo "SQL Error";
+         }
+         else
+         {
+             mysqli_stmt_bind_param($stmt,"sssss",$poNo,$customerName,$other,$newUpdateArray,$id);
+             $result =  mysqli_stmt_execute($stmt);
+             if($result){
+                echo "Successful update data";
+             }else{
+                 echo "Erorr";
+             }
              
-    //       }
+          }
  
-    //  }
+     }
     //form submit btn update details php code end
    
 

@@ -247,7 +247,7 @@
 						for($i=0; $i<sizeof($x);$i++)
 						{
 							$code=$x[$i]['salesdisc'];
-							if(stripos($code, $_POST["salesDisc"])){
+							if(stripos($code, $_POST["salesDisc"]) !== FALSE ){
 								$output .= '<a href="#" style="color: #060606;"><li id="'.$code.'">'.$code.'</li> </a>';
 							} 
 						}		

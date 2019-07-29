@@ -141,5 +141,23 @@
 
          }
 
+         
+         // Auto Completed Search php  code 
+			 if(isset($_POST["customerView"]))
+			 {
+				  $output = '';
+				  $query = "SELECT  DISTINCT 	`name` FROM  customerinfor WHERE `name` LIKE '%".$_POST["customerView"]."%'";
+				  $result = mysqli_query($conn, $query);
+				  $output = '<ul class="list_unstyled" id="customerSE" >';
+		
+					while($row = mysqli_fetch_array($result))
+					{
+							$output .= '<a href="#" style="color: #060606;"><li id="'.$row["name"].'">'.$row["name"].'</li> </a>';
+					}
+		
+				  $output .= '</ul>';
+				  echo $output;
+			 }
+
 ?>
     

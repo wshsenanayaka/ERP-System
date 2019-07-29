@@ -9,7 +9,7 @@
 
    <?php include('../include/head.php') ?>
 
-   <script src="js/jquery-3.2.1.js"></script>
+   <!-- <script src="js/jquery-3.2.1.js"></script> -->
    <style type="text/css">
       .column-left{ float: left; width: 50%; height: 450px; }
       .column-right{ float: right; width: 33%; height: 490px; }
@@ -30,6 +30,18 @@
       .itable
       {
          margin-left: 15px;
+      }
+
+      .list_unstyled{
+
+        overflow: auto;
+        background-color: #eaecef;
+        color: beige;
+        font-size: 15px;
+        padding: 1%;
+        max-height: 91px;
+        width: 450px;
+
       }
    </style>
 </head>
@@ -80,7 +92,9 @@
               <div class="form-group">
                <label for="pwd">Customer Name</label>
                 <div class="col-sm-3">
-                     <select type="text" class="form-control form-control-sm" name="customername" id="select1" required="required">
+                      <input type="text" class="form-control form-control-sm" name="customername" id="selectCustomer" style="width: 450px;"/>
+                      <div id="userlistCustomer" class="auto-view"></div>
+                     <!-- <select type="text" class="form-control form-control-sm" name="customername" id="select1" required="required">
                       <option value="">Select</option>
                       <?php
                       $query ="SELECT name FROM customerinfor";
@@ -90,7 +104,7 @@
                         echo "<option value='".$row['name']."'>".$row['name']."</option>";
                       }
                      ?>
-                     </select>
+                     </select> -->
                 </div>
              </div>
              <div id="show_product_text">
@@ -147,70 +161,52 @@
 </body>
 
 </html>
-<script type="text/javascript">
-     $(document).ready(function(){
-      $('#select1').change(function(){
-           var item_code = $(this).val();
-           $.ajax({
-                url:"./aCreateNewPurchaseOrderView",
-                method:"POST",
-                data:{item_code:item_code},
-                success:function(data){
-                     $('#show_product_text').html(data);
-                }
-           });
-      });
-    });
-</script>
 <script>
-$(document).ready(function(){
 
- load_data();
-
- function load_data(item_code,po,sales)
- {
-
-  $.ajax({
-   url:"pstable.php",
-   method:"POST",
-   data:{item_code:item_code,po:po,sales:sales},
-   success:function(data)
-   {
-    $('#result').html(data);
-   }
-  });
- }
- $('#item_code').keyup(function(){
-  aload();
- });
- $('#po').keyup(function(){
-  aload();
- });
- $('#sales').keyup(function(){
-  aload();
- });
- // $('#itemcategory').keyup(function(){
- //  aload();
- // });
- function aload()
- {
-  var item_code = $('#item_code').val();
-  var po = $('#po').val();
-  var sales = $('#sales').val();
-  //ar itemcategory = $('#itemcategory').val();
-  if(item_code !='' ||po !='' ||sales !='')
-  {
-   load_data(item_code,po,sales);
-  }
-  else
-  {
-   load_data();
-  }
- }
-});
-</script>
-<script type="text/javascript">
   function goBack() {
-    window.history.back();
-}
+      window.history.back();
+  }
+
+
+
+  $(document).on('click', '#userlistCustomer li', function(){
+
+    var idvalue=$(this).attr('id');
+
+    
+    $('#selectCustomer').val(idvalue);
+    $('#customerSE').css("display", "none");
+    $.ajax({
+        url:"./aCreateNewPurchaseOrderView",
+        method:"POST",
+        data:{item_code:idvalue},
+        success:function(data){
+
+              $('#show_product_text').html(data);
+              // $('#viewIC').css("display", "none");
+
+        }
+    });
+  });
+
+  $("body").click(function () {
+    $('#userlistCustomer li').fadeOut();
+    $('#customerSE').css("display", "none");
+  });
+
+  $('#selectCustomer').keyup(function(){
+
+      var query =$(this).val();
+        $.ajax({
+          url:"./aCreateNewPurchaseOrderCont",
+          method:"POST",
+          data:{customerView:query},
+          success:function(data)
+            {
+              $('#userlistCustomer').fadeIn();
+              $('#userlistCustomer').html(data);
+            }
+        }); 
+    });
+
 </script>
